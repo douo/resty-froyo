@@ -68,22 +68,27 @@ Since 0.3.0:
 - Proxy support. Thank you, Gabriel. r.setProxy(...) for object r or new Resty(Option.proxy(...)) to carry proxy settings over when traversing paths
 - convenient location header:  new Resty().bytes(url, put(someContent)).location(); // gets Location header as URI
 
+Since 0.3.1.1:
+
+- Can now parse JSON responses into arrays without a toplevel object.
+
 Status
 -------
 
 Growing
 
 - Some HTTP verbs still missing (HEAD, OPTIONS among them)
-- No explicit HTML support yet. Use text(...).toString() and feed it a parser like Jericho
+- No explicit HTML support yet. Use text(...).toString() and feed it a parser like Jericho or JSoup
 - No oauth support yet.
 
 Installation
 -------------
 Either create the JAR yourself (see target directory or grab the rest-*.jar file and add it to your CLASSPATH.
-Or grab it from Maven central::
- groupId: us.monoid.web
+Or grab it using Maven::
+ repo: http://repo.smokejumperit.com
+ groupId: RobertFischer
  artifactId: resty
- version: 0.2.0
+ version: 0.3.1.1
 
 Compile it yourself
 -------------------
