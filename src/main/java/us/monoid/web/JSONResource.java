@@ -31,7 +31,11 @@ public class JSONResource extends AbstractResource {
 	*/
 	public JSONArray array() throws IOException, JSONException {
 		if(json == null) unmarshal();
-		return (JSONArray)json;
+		try {
+			return (JSONArray)json;
+		} catch(ClassCastException cce) {
+			throw new IllegalStateException("Parsed JSON is not an array: " + toString(), cce);
+		}
 	}
 
 	/** 
@@ -42,7 +46,11 @@ public class JSONResource extends AbstractResource {
 	 */
 	public JSONObject object() throws IOException, JSONException {
 		if (json == null) unmarshal();
-		return (JSONObject)json;
+		try {
+			return (JSONObject)json;
+		} catch(ClassCastException cce) {
+			throw new IllegalStateException("Parsed JSON is not an object: " + toString(), cce);
+		}
 	}
 	
 	/** Added for compatibility with Scala. See Issue #2 at github.
@@ -83,6 +91,7 @@ public class JSONResource extends AbstractResource {
 	 */
 	public JSONResource json(JSONPathQuery path, Content content) throws Exception {
 		Object jsonValue = path.eval(this);
+		
 		return json(jsonValue.toString(), content);
 	}
 
@@ -133,6 +142,11 @@ public class JSONResource extends AbstractResource {
 	@Override
 	String getAcceptedTypes() {
 		return "application/json";
+	}
+
+	@Override
+	public String toString() {
+		return json.toString();
 	}
 
 }
