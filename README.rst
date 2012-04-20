@@ -72,6 +72,10 @@ Since 0.3.1.1:
 
 - Can now parse JSON responses into arrays without a toplevel object.
 
+Since 0.3.1.2:
+
+- Better error handling when REST messages fail.
+
 Status
 -------
 
@@ -88,7 +92,7 @@ Or grab it using Maven::
  repo: http://repo.smokejumperit.com
  groupId: RobertFischer
  artifactId: resty
- version: 0.3.1.1
+ version: 0.3.1.2
 
 Compile it yourself
 -------------------
