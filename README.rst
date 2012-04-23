@@ -166,9 +166,10 @@ Developers
 
 Contributors
 ============
-Jochen Bedersdorfer (resty@bedersdorfer.de)
-Gabriel Falkenberg <gabriel.falkenberg@gmail.com>
-Remi Alvergnat <remi.alvergnat@gmail.com>
+
+- Jochen Bedersdorfer (resty@bedersdorfer.de)
+- Gabriel Falkenberg <gabriel.falkenberg@gmail.com>
+- Remi Alvergnat <remi.alvergnat@gmail.com>
 
 
  
