@@ -3,16 +3,19 @@ package us.monoid.web;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.util.Map;
+import java.util.List;
 
 import us.monoid.json.JSONException;
 import us.monoid.json.JSONObject;
 import us.monoid.json.JSONArray;
-import us.monoid.json.JSONTokener;
+
+import com.smokejumperit.json.parser.JSONParser;
+import com.smokejumperit.json.parser.ParseException;
 
 
 /** A resource presentation in JSON format.
- * You can  ask Resty to parse the JSON into a JSONArray or a JSONObject. The JSONObject is similar to org.json.JSONObject 
- * and allows full access to the JSON.
+ * You can  ask Resty to parse the JSON into a JSONArray or a JSONObject. 
  * You can also access the JSON with a JSONPathQuery to extract only the parts you are interested in.
  * <p />
  * @author beders
@@ -30,9 +33,18 @@ public class JSONResource extends AbstractResource {
 	* Parse and return JSON array. Parsing is done only once after which the inputStream is at EOF.
 	*/
 	public JSONArray array() throws IOException, JSONException {
-		if(json == null) unmarshal();
+		if(json == null) {
+			try {
+				List<?> ary = new JSONParser(inputStream).parseArray();
+				json = ary;
+			} catch(ParseException pe) {
+				throw new JSONException(pe);
+			} finally {
+				inputStream.close();
+			}
+		}
 		try {
-			return (JSONArray)json;
+			return new JSONArray((List<Object>)json);
 		} catch(ClassCastException cce) {
 			throw new IllegalStateException("Parsed JSON is not an array: " + toString(), cce);
 		}
@@ -45,9 +57,18 @@ public class JSONResource extends AbstractResource {
 	 * @throws JSONException
 	 */
 	public JSONObject object() throws IOException, JSONException {
-		if (json == null) unmarshal();
+		if (json == null) {
+			try {
+				Map<?,?> map = new JSONParser(inputStream).parseObject();
+				json = map;
+			} catch(ParseException pe) {
+				throw new JSONException(pe);
+			}finally {
+				inputStream.close();
+			}
+		}
 		try {
-			return (JSONObject)json;
+			return new JSONObject((Map<String,Object>)json);
 		} catch(ClassCastException cce) {
 			throw new IllegalStateException("Parsed JSON is not an object: " + toString(), cce);
 		}
@@ -57,18 +78,12 @@ public class JSONResource extends AbstractResource {
 	 * 
 	 * @return the JSONObject presentation
 	 * @throws IOException 
-	 * @throws JSONException if data was no valid JSON
+	 * @throws JSONException if data was not valid JSON
 	 */
 	public JSONObject toObject() throws IOException, JSONException {
 		return object();
 	}
 	
-	/** Transforming the JSON on the fly */
-	protected Object unmarshal() throws IOException, JSONException {
-		json = new JSONTokener(new InputStreamReader(inputStream, "UTF-8")).nextValue();
-		inputStream.close();
-		return json;
-	}
 
 	/** Execute the given path query on the json GET the returned URI expecting JSON
 	 * 

@@ -76,6 +76,10 @@ Since 0.3.1.2:
 
 - Better error handling when REST messages fail.
 
+Since 0.3.1.3:
+
+- Using the faster and more tolerant RobertFischer:JSON-Parser rather than the JSON.org implementation.
+
 Status
 -------
 
@@ -92,7 +96,7 @@ Or grab it using Maven::
  repo: http://repo.smokejumperit.com
  groupId: RobertFischer
  artifactId: resty
- version: 0.3.1.2
+ version: 0.3.1.3
 
 Compile it yourself
 -------------------
