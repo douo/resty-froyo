@@ -100,7 +100,7 @@ Or grab it using Maven::
 
 Compile it yourself
 -------------------
-Use Maven 2 or 3 to build.
+Use Gradle 1.0 to build.
 
 
 Examples
@@ -162,10 +162,11 @@ JSON Sample for paths above::
 Developers
 ===========
 
-- Jochen Bedersdorfer (resty@bedersdorfer.de)
+- Robert Fischer (http://twitter.com/RobertFischer)
 
 Contributors
 ============
+Jochen Bedersdorfer (resty@bedersdorfer.de)
 Gabriel Falkenberg <gabriel.falkenberg@gmail.com>
 Remi Alvergnat <remi.alvergnat@gmail.com>
 
