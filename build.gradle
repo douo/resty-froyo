@@ -9,6 +9,8 @@ apply from:'http://www.smokejumperit.com/github-dev.gradle'
 sourceCompatibility = 7
 targetCompatibility = 7
 
+tasks.ghWritePom.pom.artifactId = "resty"
+tasks.ghUpload.repo = "resty"
 
 uploadArchives {
 	repositories {
@@ -31,6 +33,15 @@ uploadArchives {
 				}
 			}
 		}
+	}
+}
+
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		mavenRepo url:"http://download.java.net/maven/2/"
+		mavenRepo url:'http://repo.smokejumperit.com'
 	}
 }
 
