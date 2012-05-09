@@ -4,3 +4,6 @@ target/*
 *.iws
 .classpath
 .project
+.*.swp
+.gradle
+build
