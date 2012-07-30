@@ -26,7 +26,9 @@ public class Deletion extends AbstractContent {
 
 	@Override
 	protected void addContent(URLConnection con) throws IOException {
-		con.setDoOutput(true);
+		//FIXME Commented by DouO
+		//java.net.ProtocolException: DELETE does not support writing. 
+//		con.setDoOutput(true);
 		((HttpURLConnection)con).setRequestMethod("DELETE");
 	}
 
