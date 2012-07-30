@@ -14,16 +14,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.locks.ReentrantLock;
 
 import android.content.Context;
-import android.os.Environment;
 import android.util.Log;
+
 public class AppCacheCookieStore extends InMemoryCookieStore {
 	private static final String FILE_NAME = "info.dourok.net.AppCacheCookieStore";
 	private Context mContext;
 	private File mFile;
-	private ReentrantLock lock = null;
 	private static AppCacheCookieStore singleton;
 
 	public static AppCacheCookieStore getInstance(Context context)
@@ -52,7 +50,6 @@ public class AppCacheCookieStore extends InMemoryCookieStore {
 		if (!mFile.exists()) {
 			mFile.createNewFile();
 		}
-		lock = new ReentrantLock(false);
 		load();
 	}
 
@@ -182,17 +179,13 @@ public class AppCacheCookieStore extends InMemoryCookieStore {
 		// TODO Auto-generated method stub
 		super.add(uri, cookie);
 		try {
-			lock.lock();
 			store();
-			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally{
-			lock.unlock();
 		}
 	}
 
@@ -201,7 +194,6 @@ public class AppCacheCookieStore extends InMemoryCookieStore {
 		// TODO Auto-generated method stub
 		boolean b = super.remove(uri, ck);
 		try {
-			lock.lock();
 			store();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -209,8 +201,6 @@ public class AppCacheCookieStore extends InMemoryCookieStore {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally{
-			lock.unlock();
 		}
 		return b;
 	}
@@ -220,7 +210,6 @@ public class AppCacheCookieStore extends InMemoryCookieStore {
 		// TODO Auto-generated method stub
 		boolean b = super.removeAll();
 		try {
-			lock.lock();
 			store();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -228,8 +217,6 @@ public class AppCacheCookieStore extends InMemoryCookieStore {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally{
-			lock.unlock();
 		}
 		return b;
 	}

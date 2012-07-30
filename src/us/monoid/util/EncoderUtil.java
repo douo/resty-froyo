@@ -19,8 +19,10 @@ package us.monoid.util;
  * under the License.                                           *
  ****************************************************************/
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.BitSet;
@@ -617,8 +619,21 @@ public class EncoderUtil {
 		return i < 10 ? (char) (i + '0') : (char) (i - 10 + 'A');
 	}
 	
-	public static  String convertStreamToString(InputStream is) {
-		return new java.util.Scanner(is,"utf-8").useDelimiter("\\A").next();
+	public static  String convertStreamToString(InputStream is) throws IOException {
+		BufferedReader buf = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+        StringBuilder sb = new StringBuilder();
+        String s;
+        while(true )
+        {
+            s = buf.readLine();
+            if(s==null || s.length()==0)
+                break;
+            sb.append(s);
+
+        }
+        buf.close();
+        return sb.toString();
+//		return new java.util.Scanner(is,"utf-8").useDelimiter("\\A").next();
 	}
 	
 }

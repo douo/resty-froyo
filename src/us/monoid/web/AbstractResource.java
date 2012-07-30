@@ -35,7 +35,7 @@ public abstract class AbstractResource extends Resty {
 		try {
 			inputStream = anUrlConnection.getInputStream();
 		} catch (IOException e) {
-				//e.printStackTrace();
+			// e.printStackTrace();
 
 			// Per
 			// http://docs.oracle.com/javase/1.5.0/docs/guide/net/http-keepalive.html
@@ -57,6 +57,7 @@ public abstract class AbstractResource extends Resty {
 				String rMethod = conn.getRequestMethod();
 				int rCode = conn.getResponseCode();
 				String rMessage = conn.getResponseMessage();
+				Log.d("CODE", rCode + "");
 				InputStream is = conn.getErrorStream();
 				if (is != null) {
 					String error = EncoderUtil.convertStreamToString(conn
