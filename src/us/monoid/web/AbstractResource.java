@@ -48,6 +48,7 @@ public abstract class AbstractResource extends Resty {
 
 				// hack for 401 by douo
 				// http://stackoverflow.com/questions/10431202/java-io-ioexception-received-authentication-challenge-is-null
+				//  for version before jb (4.1)
 				if ("Received authentication challenge is null".equals(e
 						.getMessage())) {
 					throw new RestyAuthenticationException(e.getMessage(),
@@ -58,6 +59,10 @@ public abstract class AbstractResource extends Resty {
 				int rCode = conn.getResponseCode();
 				String rMessage = conn.getResponseMessage();
 				Log.d("CODE", rCode + "");
+				if(rCode ==401){
+					throw new RestyAuthenticationException(e.getMessage(),
+							conn.getRequestMethod());
+				}
 				InputStream is = conn.getErrorStream();
 				if (is != null) {
 					String error = EncoderUtil.convertStreamToString(conn
